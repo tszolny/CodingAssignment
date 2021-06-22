@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id "application"
+}
+
+group 'local.tszolny'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+apply plugin : "java"
+ext {
+    javaMainClass = "local.tszolny.LogProcessingApp"
+}
+
+application {
+    mainClass.set(javaMainClass)
+}
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    testLogging {
+        events "PASSED", "SKIPPED", "FAILED"
+    }
+}
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.7'
+
+    implementation group: 'org.hsqldb', name: 'hsqldb', version: '2.0.0'
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.5.2.Final'
+
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.7.2'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.2'
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.2'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.7.2'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.11.1'
+}
