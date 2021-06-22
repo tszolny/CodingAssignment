@@ -29,7 +29,8 @@ class EventProcessor {
         }
 
         String key = event.getId();
-        if(cache.containsKey(key)){
+        Long cachedTimestamp = cache.putIfAbsent(key, event.getTimestamp());
+        if(cachedTimestamp != null){
             LOGGER.debug("Found match in the map, processing data.");
             long tmstmpToCalculate = cache.remove(key);
 
@@ -40,10 +41,6 @@ class EventProcessor {
                 event.setAlert(true);
             }
             eventRepository.save(event);
-        } else{
-            LOGGER.debug("No match in the map, putting object.");
-            cache.put(key, event.getTimestamp());
         }
     }
-
 }
